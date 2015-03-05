@@ -69,7 +69,7 @@ class sniffing_thread(threading.Thread):
 
 	def run(self):
 		try:
-			sniff(iface=config.sniffer['ifname'], filter=string(config.sniffer['protocol'])+" port "+string(config.sniffer['port']) , prn=packet_capture, store=0)
+			sniff(iface=config.sniffer['ifname'], filter=str(config.sniffer['protocol'])+" port "+str(config.sniffer['port']) , prn=packet_capture, store=0)
 		except Exception as e:
 			print 'error: ' + str(e)
 			sys.exit(1)
