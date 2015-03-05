@@ -67,7 +67,7 @@ class sniffing_thread(threading.Thread):
 	def __init__(self, _manager):
 		global manager
 		manager = _manager
-		self.debug()
+		#self.debug()
 		threading.Thread.__init__(self)
 
 	def run(self):
