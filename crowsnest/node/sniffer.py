@@ -4,10 +4,8 @@ import logging
 import calendar
 import sys
 import time
-
 import requests
-from scapy.all import packet, sniff
-
+from scapy.all import *
 from crowsnest import config
 import request
 
@@ -49,7 +47,10 @@ def handle_get_request(request):
         request_for_m4s(request)
 
 def get_file_type(file_):
-    return file_[-4:]
+    if file_[-4:] == '.mpd':
+        return '.mpd'
+    elif file_[-4:] == '.m4s':
+        return '.m4s'
 
 def request_for_mpd(request):
     sys.stdout.write('-> handling mpd\n')
