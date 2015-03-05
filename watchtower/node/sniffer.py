@@ -49,10 +49,7 @@ def handle_get_request(request):
 		request_for_m4s(request)
 
 def get_file_type(file_):
-	if file_[-4:] == '.mpd':
-		return '.mpd'
-	elif file_[-4:] == '.m4s':
-		return '.m4s'
+	return file_[-4:]
 
 def request_for_mpd(request):
 	sys.stdout.write('-> handling mpd\n')
