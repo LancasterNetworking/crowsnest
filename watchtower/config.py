@@ -1,6 +1,7 @@
 gui = {}
 api = {}
 database = {}
+sniffer = {}
 
 def _setup_node_defaults():
 	global gui
@@ -15,3 +16,8 @@ def _setup_node_defaults():
 	database['name'] = 'watchtower_node'
 	database['host'] = 'localhost'
 	database['port'] = 27017
+
+	global sniffer
+	sniffer['ifname'] = 'lo'
+	sniffer['port'] = 80
+	sniffer['protocol'] = 'tcp'
