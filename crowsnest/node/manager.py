@@ -34,7 +34,7 @@ class Manager(object):
     def handle_mpd_request(self, request):
         if not self.file_available_locally(self.path_to_mpds, request.file_):
             self.get_file(request.host + request.path)
-        self.new_session(self.path_to_mpds + request.file_, request)
+        self.new_session(request)
 
     def file_available_locally(self, path, file_):
         if not os.path.exists(path):
@@ -71,15 +71,15 @@ class Manager(object):
                     data.append(document)
             engine.test_add_videoTime(data)
 
-    def new_session(self, local_mpd, request):
-        parser = Parser(local_mpd)
+    def new_session(self, request):
+        parser = Parser(self.path_to_mpds + request.file_)
         mpd = parser.mpd
         session = Session(mpd, request.timestamp)
-        session_identifier = str(request.src_ip) + '-' + str(request.host)
+        session_identifier = create_session_identifier(request)
         self.sessions[session_identifier] = session
 
     def handle_m4s_request(self, request):
-        session_identifier = str(request.src_ip) + '-' + str(request.host)
+        session_identifier = create_session_identifier(request)
         session = self.sessions[session_identifier]
 
         key = request.path
@@ -90,6 +90,9 @@ class Manager(object):
         entry['bitrate'] = bitrate
 
         libdatabase.write_to_collection(self.db, session_identifier, entry)
+
+    def create_session_identifier(request):
+        return str(request.src_ip) + '-' + str(request.host)
 
     def get_playback_bitrate(self, url):
         """Parse the URL to unreliably(!) determine the playback bitrate."""
