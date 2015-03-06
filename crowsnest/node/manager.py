@@ -12,10 +12,10 @@ import engine
 from mpd_parser import Parser
 from session import Session
 from crowsnest import config
-from crowsnest.lib import database
+from crowsnest.lib import database as libdatabase
 
 class Manager(object):
-    db = database.open_connection()
+    db = libdatabase.open_database()
 
     sessions = {}
     path_to_mpds = 'mpds/'
@@ -34,7 +34,7 @@ class Manager(object):
     def handle_mpd_request(self, request):
         if not self.file_available_locally(self.path_to_mpds, request.file_):
             self.get_file(request.host + request.path)
-        self.new_client(self.path_to_mpds + request.file_, request)
+        self.new_session(self.path_to_mpds + request.file_, request)
 
     def file_available_locally(self, path, file_):
         if not os.path.exists(path):
@@ -69,9 +69,9 @@ class Manager(object):
             for entry in entries:
                 for document in entries[entry]:
                     data.append(document)
-                engine.test_add_videoTime(data)
+            engine.test_add_videoTime(data)
 
-    def new_client(self, local_mpd, request):
+    def new_session(self, local_mpd, request):
         parser = Parser(local_mpd)
         mpd = parser.mpd
         session = Session(mpd, request.timestamp)
@@ -89,8 +89,7 @@ class Manager(object):
         bitrate = self.get_playback_bitrate(entry['path'])
         entry['bitrate'] = bitrate
 
-        client = self.db[session_identifier]
-        client.insert(entry)
+        libdatabase.write_to_collection(self.db, session_identifier, entry)
 
     def get_playback_bitrate(self, url):
         """Parse the URL to unreliably(!) determine the playback bitrate."""
