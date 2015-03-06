@@ -75,11 +75,11 @@ class Manager(object):
         parser = Parser(self.path_to_mpds + request.file_)
         mpd = parser.mpd
         session = Session(mpd, request.timestamp)
-        session_identifier = create_session_identifier(request)
+        session_identifier = self.create_session_identifier(request)
         self.sessions[session_identifier] = session
 
     def handle_m4s_request(self, request):
-        session_identifier = create_session_identifier(request)
+        session_identifier = self.create_session_identifier(request)
         session = self.sessions[session_identifier]
 
         key = request.path
@@ -91,7 +91,7 @@ class Manager(object):
 
         libdatabase.write_to_collection(self.db, session_identifier, entry)
 
-    def create_session_identifier(request):
+    def create_session_identifier(self, request):
         return str(request.src_ip) + '-' + str(request.host)
 
     def get_playback_bitrate(self, url):
