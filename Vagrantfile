@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "afarshad/qoem-mininet"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "watchtower"
+    vb.name = "crowsnest"
     vb.cpus = 2
     vb.memory = 1024
   end

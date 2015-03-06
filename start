@@ -35,5 +35,5 @@ if args.config:
 			setattr(config, key, _dict)
 
 if args.node:
-	from watchtower.node import manager
+	from crowsnest.node import manager
 	_manager = manager.Manager()
