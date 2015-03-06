@@ -5,10 +5,10 @@ from bson.json_util import dumps
 from flask import Flask, url_for, jsonify, request
 
 from crowsnest import config
-from crowsnest.lib import database
+from crowsnest.lib import database as libdatabase
 
 app = Flask(__name__)
-db = database.open_connection()
+db = libdatabase.open_database()
 
 @app.route('/')
 def api_root():
