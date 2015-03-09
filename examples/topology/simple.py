@@ -60,9 +60,10 @@ def sshd( network, cmd='/usr/sbin/sshd', opts='-D',
     switch.cmd( 'ovs-vsctl set-controller s1 tcp:10.123.123.1') # set controller to VM host in root namespace
     for host in network.hosts:
         host.cmd( cmd + ' ' + opts + '&' )
-    print network.getNodeByName('h1').cmd( 'sudo killall mongod > /dev/null 2>&1' )
-    print network.getNodeByName('h1').cmd( 'sudo rm -f /data/db/mongod.lock' )
-    print network.getNodeByName('h1').cmd( 'mongod --bind_ip=10.0.0.1 &' ) # run mongod on h1
+    print network.getNodeByName('h1').cmd('sudo killall mongod > /dev/null 2>&1')
+    print network.getNodeByName('h1').cmd('sudo mkdir -p /data/db/')
+    print network.getNodeByName('h1').cmd('sudo rm -f /data/db/mongod.lock')
+    print network.getNodeByName('h1').cmd('mongod --bind_ip=10.0.0.1 --fork --logpath /var/log/mongo.log') # run mongod on h1
     print
     print "*** Hosts are running sshd at the following addresses:"
     print
