@@ -28,7 +28,7 @@ from mininet.link import Link
 def TreeNet( depth=1, fanout=2, **kwargs ):
     "Convenience function for creating tree networks."
     topo = TreeTopo( depth, fanout )
-    return Mininet( topo=topo, controller=lambda name: None, xterms=True, **kwargs )
+    return Mininet( topo=topo, controller=lambda name: None, xterms=False, **kwargs )
 
 def connectToRootNS( network, switch, ip, routes ):
     """Connect hosts to root namespace via switch. Starts network.
