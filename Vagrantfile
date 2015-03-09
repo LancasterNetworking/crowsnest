@@ -20,9 +20,8 @@ Vagrant.configure(2) do |config|
     push.app = "afarshad/qoem-mininet"
   end
 
-  config.sshd.forward_agent = true
+  config.ssh.forward_agent = true
   config.ssh.forward_x11 = true
-  config.ssh.user = "vagrant"
   config.ssh.password = "vagrant"
 
 end
