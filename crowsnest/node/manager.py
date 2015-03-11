@@ -28,7 +28,8 @@ class Manager(object):
         _api.start()
 
         while(1):
-            self.send_data_to_engine()
+            #self.send_data_to_engine()
+            self.check_for_expired_sessions()
             sleep(5)
 
     def handle_mpd_request(self, request):
@@ -71,16 +72,13 @@ class Manager(object):
                     data.append(document)
             engine.test_add_videoTime(data)
 
-    def new_session(self, request):
-        parser = Parser(self.path_to_mpds + request.file_)
-        mpd = parser.mpd
-        session = Session(mpd, request.timestamp)
-        session_identifier = self.create_session_identifier(request)
-        self.sessions[session_identifier] = session
-
     def handle_m4s_request(self, request):
-        session_identifier = self.create_session_identifier(request)
+        session_identifier = self.find_session_by_identifier(request)
+        if session_identifier is None:
+            print 'cant find a session for this m4s request, has the client requested an mpd first?'
+            return
         session = self.sessions[session_identifier]
+        session.reset_time_since_last_update()
 
         key = request.path
         key = key.split('/')[-2] + '/' + key.split('/')[-1]
@@ -91,8 +89,29 @@ class Manager(object):
 
         libdatabase.write_to_collection(self.db, session_identifier, entry)
 
+    def new_session(self, request):
+        parser = Parser(self.path_to_mpds + request.file_)
+        mpd = parser.mpd
+        session = Session(request.src_ip, request.host, mpd, request.timestamp)
+        session_identifier = self.create_session_identifier(request)
+        self.sessions[session_identifier] = session
+
     def create_session_identifier(self, request):
-        return str(request.src_ip) + '-' + str(request.host)
+        return str(request.src_ip) + ' ' + str(request.host) + ' ' + str(request.timestamp)
+
+    def find_session_by_identifier(self, request):
+        newest_session = None
+        timestamp = 0
+        for session in self.sessions:
+            if session.split(' ')[-3] == request.src_ip and session.split(' ')[-2] == request.host:
+                if session.split(' ')[-1] > timestamp:
+                    newest_session = session
+        return newest_session
+
+    def check_for_expired_sessions(self):
+        for session in self.sessions:
+            if self.sessions[session].time_elapsed >= 30:
+                self.sessions[session].end_session()
 
     def get_playback_bitrate(self, url):
         """Parse the URL to unreliably(!) determine the playback bitrate."""
