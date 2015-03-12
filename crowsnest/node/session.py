@@ -11,7 +11,6 @@ class Session(object):
 
     def increment_time_since_last_update(self):
     	self.time_since_last_update = self.time_since_last_update + 1
-    	print self.time_since_last_update
 
     def reset_time_since_last_update(self):
     	self.time_since_last_update = 0

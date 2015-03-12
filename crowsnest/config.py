@@ -1,6 +1,7 @@
 gui = {}
 api = {}
 database = {}
+sessions = {}
 sniffer = {}
 
 def _setup_node_defaults():
@@ -21,3 +22,6 @@ def _setup_node_defaults():
 	sniffer['ifname'] = 'lo'
 	sniffer['port'] = 80
 	sniffer['protocol'] = 'tcp'
+
+	global sessions
+	sessions['expirey_time'] = 15

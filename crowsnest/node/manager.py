@@ -30,7 +30,7 @@ class Manager(object):
         while(1):
             #self.send_data_to_engine()
             self.check_for_expired_sessions()
-            sleep(5)
+            sleep(1)
 
     def handle_mpd_request(self, request):
         if not self.file_available_locally(self.path_to_mpds, request.file_):
@@ -105,12 +105,13 @@ class Manager(object):
         for session in self.sessions:
             if session.split(' ')[-3] == request.src_ip and session.split(' ')[-2] == request.host:
                 if session.split(' ')[-1] > timestamp:
+                    timestamp = session.split(' ')[-1]
                     newest_session = session
         return newest_session
 
     def check_for_expired_sessions(self):
         for session in self.sessions:
-            if self.sessions[session].time_elapsed >= 30:
+            if self.sessions[session].time_since_last_update >= config.sessions['expirey_time']:
                 self.sessions[session].end_session()
 
     def get_playback_bitrate(self, url):
