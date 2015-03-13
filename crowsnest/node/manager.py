@@ -101,11 +101,12 @@ class Manager(object):
 
     def find_session_by_identifier(self, request):
         newest_session = None
-        timestamp = 0
+        newest_timestamp = 0
         for session in self.sessions:
-            if session.split(' ')[-3] == request.src_ip and session.split(' ')[-2] == request.host:
-                if session.split(' ')[-1] > timestamp:
-                    timestamp = session.split(' ')[-1]
+            (src_ip, destination, timestamp) = tuple(session.split(' '))
+            if src_ip == request.src_ip and destination == request.host:
+                if timestamp > newest_timestamp:
+                    newest_timestamp = timestamp
                     newest_session = session
         return newest_session
 
