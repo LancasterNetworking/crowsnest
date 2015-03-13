@@ -45,6 +45,9 @@ def handle_get_request(request):
     elif file_type == '.m4s':
         sys.stdout.write('.m4s ')
         request_for_m4s(request)
+    elif file_type == '.mp4':
+        sys.stdout.write('.mp4')
+        request_for_mp4()
 
 def get_file_type(file_):
     return file_[-4:]
@@ -56,6 +59,9 @@ def request_for_mpd(request):
 def request_for_m4s(request):
     sys.stdout.write('-> handling m4s\n')
     manager.handle_m4s_request(request)
+
+def request_for_mp4():
+    sys.stdout.write('-> handling mp4\n')
 
 class sniffing_thread(threading.Thread):
     daemon = True
