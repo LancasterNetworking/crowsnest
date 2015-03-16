@@ -12,11 +12,9 @@ import engine
 from mpd_parser import Parser
 from session import Session
 from crowsnest import config
-from crowsnest.lib import database as libdatabase
+from crowsnest.node import database
 
 class Manager(object):
-    db = libdatabase.open_database()
-
     sessions = {}
     path_to_mpds = 'mpds/'
 
@@ -87,7 +85,7 @@ class Manager(object):
         bitrate = self.get_playback_bitrate(entry['path'])
         entry['bitrate'] = bitrate
 
-        libdatabase.write_to_collection(self.db, session_identifier, entry)
+        database.write_to_collection(session_identifier, entry)
 
     def new_session(self, request):
         parser = Parser(self.path_to_mpds + request.file_)
