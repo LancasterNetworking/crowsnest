@@ -6,6 +6,6 @@
 
 ### Run
 
-`./start -n --config examples/config/node.yaml` OR `./start -c --config examples/config/controller.yaml`
+`./crowsnest -n --config examples/config/node.yaml` OR `./start -c --config examples/config/controller.yaml`
 
-`./start -h` to see all available options
+`./crowsnest -h` to see all available options
