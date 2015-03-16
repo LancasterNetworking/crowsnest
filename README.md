@@ -1,4 +1,4 @@
-# Crowsnest
+# start
 
 ### Installation
 
@@ -6,6 +6,6 @@
 
 ### Run
 
-`./crowsnest -n --config examples/config/node.yaml` OR `./crowsnest -c --config examples/config/controller.yaml`
+`./start --config examples/config/node.yaml`
 
-`./crowsnest -h` to see all available options
+`./start -h` to see all available options
