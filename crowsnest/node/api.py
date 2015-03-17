@@ -35,7 +35,7 @@ def api_specific_sessions(id_):
 		limit = 1
 		sort_order = pymongo.DESCENDING
 	else:
-		limit = 2
+		limit = 0
 		sort_order = pymongo.ASCENDING
 
 	collections = database.get_collections()
