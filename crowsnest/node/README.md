@@ -13,14 +13,14 @@ Find all sessions currently being tracked by the application
 
 **Example URL**
 
-http://127.0.0.1:8080/api/sessions
+http://10.0.0.3:8080/api/sessions
 
 **Example Response**
 ````json
 {
   "sessions": [
-    "0.0.0.0-http://www-itec.uni-klu.ac.at", 
-    "0.0.0.1-http://www-itec.uni-klu.ac.at"
+    "10.0.0.1 10.0.0.2 1426522231", 
+    "10.0.0.1 10.0.0.2 1426522374"
   ]
 }
 ````
@@ -32,27 +32,29 @@ Return all data for specific session IDs. Get data for multiple sessions with on
 
 **Example URL**
 
-http://127.0.0.1:8080/api/sessions/0.0.0.0-http://www-itec.uni-klu.ac.at
+http://10.0.0.3:8080/api/sessions/10.0.0.1%2010.0.0.2%201426522231
+
+* Note, because session identifiers are delimetered by spaces, you'll need to replace those spaces with `%20` as found in the example URL.
 
 **Example Response**
 ````json
 {
-  "0.0.0.0-http://www-itec.uni-klu.ac.at": [
+  "10.0.0.1 10.0.0.2 1426522231": [
     {
       "mimeType": "video/mp4",
-      "src_ip": "0.0.0.0",
-      "timestamp": 1423839108,
-      "file_": "bunny_2s4.m4s",
-      "host": "http://www-itec.uni-klu.ac.at",
-      "height": "1080",
+      "src_ip": "10.0.0.1",
+      "timestamp": 1426522232,
+      "file_": "bunny_2s1.m4s",
+      "host": "10.0.0.2",
+      "height": "360",
       "startWithSAP": "1",
-      "width": "1920",
-      "bandwidth": "4219897",
+      "width": "480",
+      "bandwidth": "334349",
       "codecs": "avc1",
       "duration": 2,
-      "path": "ftp/datasets/mmsys12/BigBuckBunny/bunny_2s/bunny_2s_8000kbit/bunny_2s4.m4s",
-      "bitrate": 8000,
-      "id": "19"
+      "path": "/bunny_2s/bunny_2s_400kbit/bunny_2s1.m4s",
+      "bitrate": 400,
+      "id": "6"
     }
   ]
 }
@@ -81,19 +83,19 @@ id				| *N/A*
 
 **Example URL**
 
-http://127.0.0.1:8080/api/sessions/0.0.0.0-http://www-itec.uni-klu.ac.at?fields=timestamp,file_
+http://10.0.0.3:8080/api/sessions/10.0.0.1%2010.0.0.2%201426522231?fields=timestamp,file_
 
 **Example Response**
 ````json
 {
-  "0.0.0.0-http://www-itec.uni-klu.ac.at": [
-	{
-		"timestamp": 1423839108,
-		"file_": "bunny_2s4.m4s"
+  "10.0.0.1 10.0.0.2 1426522231": [
+    {
+      "timestamp": 1426522232,
+      "file_": "bunny_2s1.m4s"
     },
     {
-		"timestamp": 1423839109,
-		"file_": "bunny_2s5.m4s"
+      "timestamp": 1426522232,
+      "file_": "bunny_2s1.m4s"
     }
   ]
 }
@@ -105,15 +107,19 @@ Append `mostRecent=True` to your URL to get the single most recent record for ea
 
 **Example URL**
 
-http://127.0.0.1:8080/api/sessions/0.0.0.0-http://www-itec.uni-klu.ac.at?fields=timestamp,bitrate&mostRecent=True'
+http://10.0.0.3:8080/api/sessions/10.0.0.1%2010.0.0.2%201426522231?fields=timestamp,bitrate&mostRecent=True
 
 **Example Response**
 ````json
 {
-  "0.0.0.0-http://www-itec.uni-klu.ac.at": [
+  "10.0.0.1 10.0.0.2 1426522231": [
     {
-      "timestamp": 1424445625,
-      "bitrate": 8000
+      "timestamp": 1426522232,
+      "file_": "bunny_2s1.m4s"
+    },
+    {
+      "timestamp": 1426522232,
+      "file_": "bunny_2s1.m4s"
     }
   ]
 }
