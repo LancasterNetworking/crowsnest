@@ -14,7 +14,7 @@ def _setup_node_defaults():
 	api['port'] = 5000
 
 	global database
-	database['name'] = 'watchtower_node'
+	database['name'] = 'crowsnest'
 	database['host'] = 'localhost'
 	database['port'] = 27017
 
