@@ -31,16 +31,20 @@ class Manager(object):
             sleep(1)
 
     def handle_mpd_request(self, request):
+        """ Hand off processing of packets requesting MPD files """ 
         if not self.file_available_locally(self.path_to_mpds, request.file_):
             self.get_file(request.host + request.path)
         self.new_session(request)
 
     def file_available_locally(self, path, file_):
+        """ True/False if a file is available on the local filesystem """
         if not os.path.exists(path):
             os.makedirs(path)
         return os.path.isfile(path + file_)
 
     def get_file(self, url):
+        """ Request a file from a remote location, typically used for
+        downloading remote MPD files to be parsed later """
         file_ = url.split('/')[-1]
 
         with open(self.path_to_mpds + file_, 'wb') as handle:
@@ -71,6 +75,7 @@ class Manager(object):
             engine.test_add_videoTime(data)
 
     def handle_m4s_request(self, request):
+        """ Hand off processing of packets requesting m4s files """ 
         session_identifier = self.find_session_by_identifier(request)
         if session_identifier is None:
             print 'cant find a session for this m4s request, has the client requested an mpd first?'
@@ -88,6 +93,8 @@ class Manager(object):
         database.write_to_collection(session_identifier, entry)
 
     def new_session(self, request):
+        """ Create a new user session by using data extracted
+        from the HTTP request packet """
         parser = Parser(self.path_to_mpds + request.file_)
         mpd = parser.mpd
         session = Session(request.src_ip, request.host, mpd, request.timestamp)
@@ -95,6 +102,7 @@ class Manager(object):
         self.sessions[session_identifier] = session
 
     def create_session_identifier(self, request):
+        """ Find a suitable identifier for each request """
         return str(request.src_ip) + ' ' + str(request.host) + ' ' + str(request.timestamp)
 
     def find_session_by_identifier(self, request):
