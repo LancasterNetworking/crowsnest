@@ -22,7 +22,6 @@ def api_sessions():
 def api_specific_sessions(id_):
 	sessions = set(id_.split(','))
 
-	projection = {'_id': 0}
 	fields = request.args.get('fields')
 	if fields:
 		fields = fields.split(',')

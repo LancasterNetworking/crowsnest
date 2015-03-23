@@ -14,7 +14,7 @@ def _setup_node_defaults():
 	api['port'] = 5000
 
 	global database
-	database['name'] = 'crowsnest'
+	database['name'] = 'crowsnest_node'
 	database['host'] = 'localhost'
 	database['port'] = 27017
 

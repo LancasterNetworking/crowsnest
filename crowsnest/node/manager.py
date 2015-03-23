@@ -9,6 +9,7 @@ from pymongo import Connection
 import sniffer
 import api
 import engine
+from gui import web
 from mpd_parser import Parser
 from session import Session
 from crowsnest import config
@@ -25,10 +26,12 @@ class Manager(object):
         _api = api.api_thread()
         _api.start()
 
+        gui = web.webserver_thread()
+        gui.start()
         while(1):
             #self.send_data_to_engine()
             self.check_for_expired_sessions()
-            sleep(1)
+            sleep(5)
 
     def handle_mpd_request(self, request):
         """ Hand off processing of packets requesting MPD files """ 
@@ -117,6 +120,7 @@ class Manager(object):
         return newest_session
 
     def check_for_expired_sessions(self):
+        """ Expire sessions if they exceed the configured expirey time """
         for session in self.sessions:
             if self.sessions[session].time_since_last_update >= config.sessions['expirey_time']:
                 self.sessions[session].end_session()

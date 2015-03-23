@@ -1,0 +1,18 @@
+body {
+	padding: 1em;
+}
+
+.card {
+	border: 1px solid gray;
+	padding: 1em;
+	margin: 0.5em;
+	background: #FFFFFD;
+	-webkit-box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.30);
+	-moz-box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.30);
+	box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.30);
+}
+
+#sessions {
+	font-family: monospace;
+	font-size: 0.9em;
+}
