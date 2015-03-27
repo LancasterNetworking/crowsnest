@@ -6,10 +6,28 @@ import re
 import time
 # input data from the manager to the engine: timestamp,duration,bitrate,width,height
 
+def find_bitrate_stats(documents, method):
+    bitrates = list()
+    for document in documents:
+        try:
+            bitrates.append(document['bitrate'])
+        except KeyError:
+            return 'N/A'
+    try:
+        if method.lower() == 'min':
+            return min(bitrates)
+        if method.lower() == 'avg':
+            return ( sum(bitrates) / len(bitrates) )
+        if method.lower() == 'max':
+            return max(bitrates)
+        if method.lower() == 'range':
+            return (max(bitrates) - min(bitrates))
+    except (ValueError, ZeroDivisionError):
+        return 'N/A'
+
 def handle_this_method_call(_dictionary):
     print 'engine is being called'
     print _dictionary
-
 
 def add_videoTime(_stats):
     """

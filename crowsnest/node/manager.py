@@ -26,10 +26,9 @@ class Manager(object):
         _api = api.api_thread()
         _api.start()
 
-        gui = web.webserver_thread()
+        gui = web.webserver_thread(self)
         gui.start()
         while(1):
-            #self.send_data_to_engine()
             self.check_for_expired_sessions()
             sleep(5)
 
@@ -76,6 +75,18 @@ class Manager(object):
                 for document in entries[entry]:
                     data.append(document)
             engine.test_add_videoTime(data)
+
+    def find_bitrate_stats(self, session_identifier, method):
+        documents = database.find(session_identifier, {'bitrate': 1})
+        result = engine.find_bitrate_stats(documents, method)
+        return result
+
+    def get_timeseries_data(self, session_identifier, metric):
+        documents = database.find(session_identifier, {metric: 1, 'timestamp': 1})
+        data_points = list()
+        for document in documents:
+            data_points.append([document['timestamp'], document[metric]])
+        return data_points
 
     def handle_m4s_request(self, request):
         """ Hand off processing of packets requesting m4s files """ 

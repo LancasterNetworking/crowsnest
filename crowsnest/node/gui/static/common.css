@@ -1,8 +1,15 @@
 body {
 	padding: 1em;
+	background: url('skeletal.png');
+	background-repeat: yes;
 }
 
-.card {
+.card .title {
+	font-size: 1.7em;
+	padding-left: 0.3em;
+}
+
+.card .body {
 	border: 1px solid gray;
 	padding: 1em;
 	margin: 0.5em;
@@ -12,7 +19,23 @@ body {
 	box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.30);
 }
 
-#sessions {
+.selected {
+	font-weight: bold;;
+}
+
+#sessions .body {
 	font-family: monospace;
 	font-size: 0.9em;
+}
+
+#sessions span {
+	cursor: pointer;
+}
+
+.graph {
+	height: 400px;
+}
+
+.affix {
+	width: 31.25%;
 }
