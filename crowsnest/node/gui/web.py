@@ -2,7 +2,6 @@ from threading import Thread, Timer
 from time import sleep
 import pprint
 
-import gevent
 from flask import Flask, render_template, jsonify, copy_current_request_context
 from flask.ext.socketio import SocketIO, emit
 
@@ -19,7 +18,7 @@ manager = None
 def homepage():
 	return render_template('index.html')
 
-@socketio.on('my event')
+@socketio.on('client connected')
 def test_message(message):
 	emit('my response', {'sessions': database.get_collections()})
 	@copy_current_request_context
@@ -56,7 +55,6 @@ def session_changed(message):
 
 	timeseries = manager.get_timeseries_data(message['session'], 'height')
 	emit('timeseries', {'height': timeseries})
-
 
 	timeseries = manager.get_timeseries_data(message['session'], 'width')
 	emit('timeseries', {'width': timeseries})

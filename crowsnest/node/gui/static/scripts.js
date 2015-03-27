@@ -5,7 +5,7 @@ var socket = null
 $(document).ready(function(){
 	socket = io.connect();
 
-	socket.emit('my event', {'data': 'yes'});
+	socket.emit('client connected', {'cool': 'very'});
 
 	socket.on('my response', function(msg) {
 		if (previous_sessions == null) {
@@ -36,19 +36,25 @@ $(document).ready(function(){
 		});
 	});
 
-$('#sessions').affix({
-  offset: {
-    top: 1,
-    bottom: function () {
-      return (this.bottom = $('.footer').outerHeight(true))
-    }
-  }
-})
+	var interval = setInterval(ask_for_refresh, 3000);
 });
+
+function ask_for_refresh() {
+	socket.emit('session_changed', {'session': current_session});
+}
 
 $('#sessions').on('click', 'span', function(){
 	$('.selected').removeClass('selected');
 	$(this).addClass('selected');
 	current_session = $(this).text();
 	socket.emit('session_changed', {'session': current_session});
+});
+
+$('#sessions').affix({
+	offset: {
+		top: 1,
+		bottom: function () {
+			return (this.bottom = $('.footer').outerHeight(true))
+		}
+	}
 });

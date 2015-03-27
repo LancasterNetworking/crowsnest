@@ -45,7 +45,7 @@ to_h2_rdirc_h3 = {
     "ingress-port":"1",
     "dst-ip":"10.0.0.2",
     "active":"true",
-    "actions":"output=NORMAL,set-dst-mac=00:00:00:00:00:03,set-dst-ip=10.0.0.3,output=NORMAL"
+    "actions":"output=5,set-dst-mac=00:00:00:00:00:03,set-dst-ip=10.0.0.3,output=2"
     }
 
 
