@@ -12,6 +12,8 @@ import request
 manager = None
 
 def packet_capture(packet):
+    """ Inspect packet headers, create and handoff a Get request object 
+    with the information we're interested in for further processing """
     get_found = str()
     host = str()
 
@@ -37,6 +39,7 @@ def packet_capture(packet):
             handle_get_request(get_request)
 
 def handle_get_request(request):
+    """ Check the file type received and handoff appropriately"""
     file_type = get_file_type(request.file_)
 
     if file_type == '.mpd':
@@ -68,7 +71,7 @@ class sniffing_thread(threading.Thread):
     def __init__(self, _manager):
         global manager
         manager = _manager
-        #self.debug()
+        self.debug()
         threading.Thread.__init__(self)
 
     def run(self):

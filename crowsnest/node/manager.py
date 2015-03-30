@@ -20,6 +20,7 @@ class Manager(object):
     path_to_mpds = 'mpds/'
 
     def __init__(self):
+        """ Start crowsnest and its various services """
         sniff = sniffer.sniffing_thread(self)
         sniff.start()
 
@@ -34,15 +35,18 @@ class Manager(object):
 
     def handle_mpd_request(self, request):
         """ Hand off processing of packets requesting MPD files """ 
-        if not self.file_available_locally(self.path_to_mpds, request.file_):
+        if not self.file_available_locally(self.path_to_mpds + request.file_):
             self.get_file(request.host + request.path)
         self.new_session(request)
 
-    def file_available_locally(self, path, file_):
+    def file_available_locally(self, file_):
         """ True/False if a file is available on the local filesystem """
+        path = ""
+        for split in file_.split('/')[:-1]:
+            path = path + split + "/"
         if not os.path.exists(path):
             os.makedirs(path)
-        return os.path.isfile(path + file_)
+        return os.path.isfile(file_)
 
     def get_file(self, url):
         """ Request a file from a remote location, typically used for
@@ -77,20 +81,28 @@ class Manager(object):
             engine.test_add_videoTime(data)
 
     def find_bitrate_stats(self, session_identifier, method):
+        """ Wraps the engine call of the same name """
         documents = database.find(session_identifier, {'bitrate': 1})
         result = engine.find_bitrate_stats(documents, method)
         return result
 
     def get_timeseries_data(self, session_identifier, metric):
+        """ Wraps the engine call of the same name """
         documents = database.find(session_identifier, {metric: 1, 'timestamp': 1})
         data_points = list()
         for document in documents:
             data_points.append([document['timestamp'], document[metric]])
         return data_points
 
+    def get_video_quality(self, session_identifier):
+        documents = database.find(session_identifier, {'height': 1, 'bitrate': 1, 'timestamp': 1})
+        video_quality = engine.calc_videoQuality(documents)
+        return video_quality
+
     def handle_m4s_request(self, request):
-        """ Hand off processing of packets requesting m4s files """ 
-        session_identifier = self.find_session_by_identifier(request)
+        """ Find the correct session that this m4s belongs to,
+        and then write get request information to the database """ 
+        session_identifier = self.find_session_identifier(request)
         if session_identifier is None:
             print 'cant find a session for this m4s request, has the client requested an mpd first?'
             return
@@ -119,7 +131,7 @@ class Manager(object):
         """ Find a suitable identifier for each request """
         return str(request.src_ip) + ' ' + str(request.host) + ' ' + str(request.timestamp)
 
-    def find_session_by_identifier(self, request):
+    def find_session_identifier(self, request):
         newest_session = None
         newest_timestamp = 0
         for session in self.sessions:

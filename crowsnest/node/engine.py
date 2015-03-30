@@ -7,6 +7,15 @@ import time
 # input data from the manager to the engine: timestamp,duration,bitrate,width,height
 
 def find_bitrate_stats(documents, method):
+    """ Calculate simple statistics for a collection of bitrates
+
+    Args:
+        documents: A MongoDB documents object with records containing the field
+        'bitrate'
+        method: 'avg', 'min', 'max', or 'range'
+
+    Return: either a single integer or 'N/A'
+    """
     bitrates = list()
     for document in documents:
         try:
@@ -73,16 +82,19 @@ def calc_videoQuality(_stats):
     video_resolution: Video Resolution like 720p or 1080p
     Return: videoQuality.
     """
-    _videoQuality = 0.0
-    for i in range(0, len(_stats)):
-        if _stats[i]['height'] == 720 and _stats[i]['bitrate'] < 2000:
-            _videoQuality = -4.85 * math.pow(int(_stats[i]['bitrate']), -0.647) + 1.011
+    _videoQuality = list()
+    for document in _stats:
+        height = int(document['height'])
+        bitrate = int(document['bitrate'])
 
-        if _stats[i]['height'] == 1080:
-            _videoQuality = -3.035 * math.pow(int(_stats[i]['bitrate']), -0.5061) + 1.022
+        if height == 720 and bitrate < 2000:
+            _videoQuality.append([document['timestamp'], -4.85 * math.pow(int(bitrate), -0.647) + 1.011])
 
-        if _stats[i]['height'] == 360 and _stats[i]['bitrate'] < 1000:
-            _videoQuality = -17.53 * math.pow(int(_stats[i]['bitrate']), -1.048) + 0.9912
+        if height == 1080:
+            _videoQuality.append([document['timestamp'], -3.035 * math.pow(int(bitrate), -0.5061) + 1.022])
+
+        if height == 360 and bitrate < 1000:
+            _videoQuality.append([document['timestamp'], -17.53 * math.pow(int(bitrate), -1.048) + 0.9912])
 
     return _videoQuality
 

@@ -59,6 +59,9 @@ def session_changed(message):
 	timeseries = manager.get_timeseries_data(message['session'], 'width')
 	emit('timeseries', {'width': timeseries})
 
+	timeseries= manager.get_video_quality(message['session'])
+	emit('timeseries', {'quality': timeseries})
+
 class webserver_thread(Thread):
 	daemon = True
 	def __init__(self, _manager):
