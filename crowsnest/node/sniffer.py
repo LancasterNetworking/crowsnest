@@ -35,7 +35,7 @@ def packet_capture(packet):
                     host = h.split(":")[1].strip(" ").split("\r\n")[0]
             file_ = get_found.split('/')[-1]
             get_request = request.Get(calendar.timegm(time.gmtime()), src_ip, host, get_found, file_)
-            sys.stdout.write('[get]')
+            #sys.stdout.write('[get]')
             handle_get_request(get_request)
 
 def handle_get_request(request):
@@ -43,39 +43,41 @@ def handle_get_request(request):
     file_type = get_file_type(request.file_)
 
     if file_type == '.mpd':
-        sys.stdout.write('.mpd ')
+        #sys.stdout.write('.mpd ')
         request_for_mpd(request)
     elif file_type == '.m4s':
-        sys.stdout.write('.m4s ')
+        #sys.stdout.write('.m4s ')
         request_for_m4s(request)
     elif file_type == '.mp4':
-        sys.stdout.write('.mp4')
+        #sys.stdout.write('.mp4')
         request_for_mp4()
 
 def get_file_type(file_):
     return file_[-4:]
 
 def request_for_mpd(request):
-    sys.stdout.write('-> handling mpd\n')
+    #sys.stdout.write('-> handling mpd\n')
     manager.handle_mpd_request(request)
 
 def request_for_m4s(request):
-    sys.stdout.write('-> handling m4s\n')
+    #sys.stdout.write('-> handling m4s\n')
     manager.handle_m4s_request(request)
 
 def request_for_mp4():
-    sys.stdout.write('-> handling mp4\n')
+    pass
+    #sys.stdout.write('-> handling mp4\n')
 
 class sniffing_thread(threading.Thread):
     daemon = True
     def __init__(self, _manager):
         global manager
         manager = _manager
-        self.debug()
+        #self.debug()
         threading.Thread.__init__(self)
 
     def run(self):
         try:
+	    print 'im sniffing'
             sniff(iface=config.sniffer['ifname'], filter=str(config.sniffer['protocol'])+" port "+str(config.sniffer['port']) , prn=packet_capture, store=0)
         except Exception as e:
             print 'error: ' + str(e)
