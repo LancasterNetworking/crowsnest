@@ -19,19 +19,19 @@ You'll need two shell sessions for testing, start them with:
 
 ### Step 3
 
-We need an OpenFlow controller. Any will do, but we ship our image with Floodlight preinstalled. Start Floodlight in one of two shell sessions:
+We need an OpenFlow controller. Any will do, but we ship our image with Floodlight preinstalled. Start Floodlight in one of the two shell sessions:
 
 `$ java -jar ~/floodlight/target/floodlight.jar`
 
 ### Step 4
 
-We provision virtualised hosts using Mininet, which comes preinstalled in our image. Start mininet like so:
+We provision virtualised hosts using Mininet, which comes preinstalled in our image. Start mininet in the second shell session like so:
 
 `$ sudo python /vagrant/examples/topology/simple.py`
 
 ### Step 5
 
-The previous step provisions 4 hosts and leaves you in the mininet shell, `mininet>`. Open shell sessions for each host with xterm:
+The previous step provisions 4 hosts and leaves you in the mininet shell, `mininet>`. To interact with the hosts efficiently, you'll need an implementation of the X Windowing System. If you're on Linux, see `xorg`; OS X, see `XQuartz`. Open shell sessions for each host with xterm:
 
 `mininet> xterm h1 h2 h3 h4`
 

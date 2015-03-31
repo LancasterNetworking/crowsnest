@@ -1,0 +1,16 @@
+gui:
+  host: 0.0.0.0
+  port: 80
+api:
+  host: 0.0.0.0
+  port: 5000
+database:
+  name: crowsnest_node
+  host: localhost
+  port: 27017
+sniffer:
+  ifname: lo
+  protocol: tcp
+  port: 80
+sessions:
+  expirey_time: 15
