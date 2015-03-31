@@ -28,11 +28,11 @@ Crowsnest can be started with its default configuration, or it can be ran with a
 user specified configuration file in situations where port mappings overlap
 with other services on a machine. 
 
-_Basic_
+__Basic__
 
 `./start`
 
-_With Configuration_
+__With Configuration__
 
 `./start --config examples/config/node.yaml`
 
