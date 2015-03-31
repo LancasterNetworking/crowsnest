@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "afarshad/qoem-mininet"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "watchtower"
+    vb.name = "crowsnest"
     vb.cpus = 2
     vb.memory = 1024
   end
@@ -20,9 +20,8 @@ Vagrant.configure(2) do |config|
     push.app = "afarshad/qoem-mininet"
   end
 
-  config.sshd.forward_agent = true
+  config.ssh.forward_agent = true
   config.ssh.forward_x11 = true
-  config.ssh.user = "vagrant"
   config.ssh.password = "vagrant"
 
 end

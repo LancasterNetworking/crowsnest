@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Crow's Nest</title>
+
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<link rel="stylesheet" type="text/css" href="static/common.css">
+		<link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="card" data-spy="affix" id="sessions" >
+					<div class="title">Sessions</div>
+					<div class="body"></div>
+				</div>
+			</div>
+
+			<div class="col-sm-8">
+
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="card">
+							<div class="title">Bitrate Statistics</div>
+							<div id="bitrate_stats" class="body">
+								<div class="row">
+									<div class="col-sm-6">
+										<b>Min</b>:&nbsp;<span id="minimum"></span>
+										<b>Avg</b>:&nbsp;<span id="average"></span><br/>
+									</div>
+									<div class="col-sm-6">
+										<b>Max</b>:&nbsp;<span id="maximum"></span>
+										<b>Range</b>:&nbsp;<span id="range"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-8">
+						<div class="card">
+							<div class="title">Some Title</div>
+							<div class="body">Some stuff<br/>2 lines</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="title">Bitrate Graph</div>
+							<div class="body">
+								<div class="graph" id="bitrate_graph"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="title">Height Graph</div>
+							<div class="body">
+								<div class="graph" id="height_graph"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="title">Width Graph</div>
+							<div class="body">
+								<div class="graph" id="width_graph"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="title">Video Quality Graph</div>
+							<div class="body">
+								<div class="graph" id="quality_graph"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<script src="static/jquery.min.js"></script>
+		<script src="static/jquery.flot.min.js"></script>
+		<script src="static/bootstrap.min.js"></script>
+		<script src="static/socket.io.min.js"></script>
+		<script src="static/scripts.js"></script>
+	</body>
+
+</html>

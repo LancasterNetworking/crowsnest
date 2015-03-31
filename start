@@ -8,23 +8,11 @@ import yaml
 from crowsnest import config
 
 parser = argparse.ArgumentParser()
-group = parser.add_mutually_exclusive_group()
-group.add_argument("-n", "--node", help="Run this instance as a node",
-					action="store_true")
-group.add_argument("-c", "--controller", help="Run this instance as a controller",
-					action="store_true")
 parser.add_argument("--config", help="Config file")
 
 args = parser.parse_args()
 
-if not args.node and not args.controller:
-	print 'Specify if this instance is a controller or node'
-	sys.exit(1)
-
-if args.node:
-	config._setup_node_defaults()
-else:
-	config._setup_controller_defaults()
+config._setup_node_defaults()
 
 if args.config:
 	with open(args.config, 'r') as f:
@@ -34,6 +22,5 @@ if args.config:
 			_dict.update(_config[key])
 			setattr(config, key, _dict)
 
-if args.node:
-	from watchtower.node import manager
-	_manager = manager.Manager()
+from crowsnest.node import manager
+_manager = manager.Manager()

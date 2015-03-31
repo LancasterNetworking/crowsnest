@@ -1,14 +1,16 @@
 gui:
   host: 0.0.0.0
-  port: 80
+  port: 8081
 api:
   host: 0.0.0.0
   port: 8080
 database:
-  name: watchtower_node
-  host: localhost
+  name: crowsnest_node
+  host: 10.0.0.1
   port: 27017
 sniffer:
   ifname: h3-eth0
   protocol: tcp
   port: 80
+sessions:
+  expirey_time: 10

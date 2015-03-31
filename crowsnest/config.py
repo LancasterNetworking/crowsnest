@@ -1,6 +1,7 @@
 gui = {}
 api = {}
 database = {}
+sessions = {}
 sniffer = {}
 
 def _setup_node_defaults():
@@ -13,7 +14,7 @@ def _setup_node_defaults():
 	api['port'] = 5000
 
 	global database
-	database['name'] = 'watchtower_node'
+	database['name'] = 'crowsnest_node'
 	database['host'] = 'localhost'
 	database['port'] = 27017
 
@@ -21,3 +22,6 @@ def _setup_node_defaults():
 	sniffer['ifname'] = 'lo'
 	sniffer['port'] = 80
 	sniffer['protocol'] = 'tcp'
+
+	global sessions
+	sessions['expirey_time'] = 15

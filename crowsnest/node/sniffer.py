@@ -12,6 +12,8 @@ import request
 manager = None
 
 def packet_capture(packet):
+    """ Inspect packet headers, create and handoff a Get request object 
+    with the information we're interested in for further processing """
     get_found = str()
     host = str()
 
@@ -37,6 +39,7 @@ def packet_capture(packet):
             handle_get_request(get_request)
 
 def handle_get_request(request):
+    """ Check the file type received and handoff appropriately"""
     file_type = get_file_type(request.file_)
 
     if file_type == '.mpd':
@@ -45,12 +48,12 @@ def handle_get_request(request):
     elif file_type == '.m4s':
         sys.stdout.write('.m4s ')
         request_for_m4s(request)
+    elif file_type == '.mp4':
+        sys.stdout.write('.mp4')
+        request_for_mp4()
 
 def get_file_type(file_):
-    if file_[-4:] == '.mpd':
-        return '.mpd'
-    elif file_[-4:] == '.m4s':
-        return '.m4s'
+    return file_[-4:]
 
 def request_for_mpd(request):
     sys.stdout.write('-> handling mpd\n')
@@ -60,12 +63,15 @@ def request_for_m4s(request):
     sys.stdout.write('-> handling m4s\n')
     manager.handle_m4s_request(request)
 
+def request_for_mp4():
+    sys.stdout.write('-> handling mp4\n')
+
 class sniffing_thread(threading.Thread):
     daemon = True
     def __init__(self, _manager):
         global manager
         manager = _manager
-        #self.debug()
+        self.debug()
         threading.Thread.__init__(self)
 
     def run(self):

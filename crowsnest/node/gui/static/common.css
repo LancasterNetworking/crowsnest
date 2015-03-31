@@ -1,0 +1,45 @@
+body {
+	padding: 1em;
+	background: url('skeletal.png');
+	background-repeat: yes;
+}
+
+.card .title {
+	font-size: 1.7em;
+	padding-left: 0.3em;
+}
+
+.card .body {
+	border: 1px solid gray;
+	padding: 1em;
+	margin: 0.5em;
+	background: #FFFFFD;
+	-webkit-box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.30);
+	-moz-box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.30);
+	box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.30);
+}
+
+.card {
+	padding-bottom: 1.5em;
+}
+
+.selected {
+	font-weight: bold;;
+}
+
+#sessions .body {
+	font-family: monospace;
+	font-size: 0.9em;
+}
+
+#sessions span {
+	cursor: pointer;
+}
+
+.graph {
+	height: 300px;
+}
+
+.affix {
+	width: 31.25%;
+}
