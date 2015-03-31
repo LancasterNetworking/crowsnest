@@ -13,4 +13,4 @@ sniffer:
   protocol: tcp
   port: 80
 sessions:
-  expirey_time: 15
+  expirey_time: 15 #seconds
