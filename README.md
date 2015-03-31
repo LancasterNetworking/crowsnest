@@ -1,7 +1,7 @@
 # Crowsnest
 
 Crowsnest is a research SDN application developed at Lancaster Unviersity.
-Crosnest facillitates the collection of QoE metrics for Video on
+Crowsnest facillitates the collection of QoE metrics for Video on
 Demand content in OpenFlow enabled networks.
 
 Crowsnest is built with Python and targets version 2.7. It has only been tested
