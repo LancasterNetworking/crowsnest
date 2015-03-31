@@ -39,6 +39,12 @@ __With Configuration__
 `./start -h` to see all available options
 
 
+The configuration file `examples/config/default.yaml` provides an example of
+*all* available configuration options, and is merely for documentation. There is
+no need to run crowsnest with this file.
+
+You do not need to include options you do not wish to change.
+
 ### Usage
 
 To collect metrics, traffic must be sent to the machine running crowsnest by
